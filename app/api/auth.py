@@ -14,7 +14,7 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 
 @router.post("/login", response_model=TokenOut)
 async def login(body: LoginIn, session: SessionDep) -> TokenOut:
-    user = await session.scalar(select(User).where(func.lower(User.email) == body.email.lower()))
+    user = await session.scalar(select(User).where(func.lower(User.email) == body.email.strip().lower()))
     if user is None or not user.is_active or not verify_password(body.password, user.password_hash):
         raise AppError(401, "invalid_credentials", "Email or password is incorrect")
     return TokenOut(access_token=create_access_token(str(user.id), {"role": user.role.value}))

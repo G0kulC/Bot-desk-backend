@@ -9,7 +9,7 @@ os.environ.update(
     {
         "APP_ENV": "test",
         "DATABASE_URL": os.environ.get(
-            "TEST_DATABASE_URL", "postgresql+asyncpg://botdesk:botdesk@localhost:5432/botdesk_test"
+            "TEST_DATABASE_URL", "postgresql+asyncpg://postgres:postgres@localhost:5432/bots_db_v1_test"
         ),
         "FERNET_KEY": Fernet.generate_key().decode(),
         "JWT_SECRET": "test-jwt-secret-that-is-long-enough-for-hs256",

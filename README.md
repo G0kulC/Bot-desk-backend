@@ -8,40 +8,37 @@ centres, gyms, real-estate agents). For each client business it:
 3. captures leads and bookings, and hands the chat to a human when needed,
 4. manages clients, packages, payments, renewals and monthly reports.
 
-Stack: Python 3.12 · FastAPI · SQLAlchemy 2.0 (async, asyncpg) · Alembic · PostgreSQL 16 · Pydantic v2 ·
+Stack: Python 3.11+ · FastAPI · SQLAlchemy 2.0 (async, asyncpg) · Alembic · PostgreSQL 16 · Pydantic v2 ·
 httpx · APScheduler · OpenRouter (AI) · Meta WhatsApp Cloud API or AiSensy (transport).
 
 ---
 
 ## 1. Local setup
 
-### With Docker (recommended)
+Uses a local PostgreSQL (no Docker). Create the database once:
 
 ```bash
-cp backend/.env.example backend/.env
-# edit backend/.env: set FERNET_KEY, JWT_SECRET, ADMIN_PASSWORD, OPENROUTER_API_KEY,
-# META_APP_SECRET and META_WEBHOOK_VERIFY_TOKEN (for the default `own` provider)
-docker compose up --build                     # starts db + api; runs `alembic upgrade head` on start
-docker compose exec api python -m app.seed    # admin user, example client, sample knowledge
+createdb -U postgres bots_db_v1
+```
+
+Then:
+
+```bash
+cd backend
+uv sync                          # creates .venv with Python 3.11+ and dev tools
+cp .env.example .env             # DATABASE_URL points at the local bots_db_v1; set the keys below
+uv run alembic upgrade head
+uv run python -m app.seed        # admin user (ADMIN_EMAIL / ADMIN_PASSWORD from .env), example client, sample knowledge
+uv run uvicorn app.main:app --reload
 ```
 
 API: http://localhost:8000 · OpenAPI docs: http://localhost:8000/docs · health: `GET /health`.
 
-Generate a Fernet key:
+In `.env`, set `FERNET_KEY`, `JWT_SECRET`, `ADMIN_PASSWORD`, `OPENROUTER_API_KEY`, and `META_APP_SECRET` +
+`META_WEBHOOK_VERIFY_TOKEN` (for the default `own` provider). Generate a Fernet key:
 
 ```bash
 python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
-```
-
-### Without Docker
-
-```bash
-cd backend
-uv sync                          # creates .venv with Python 3.12 + dev tools
-cp .env.example .env             # set DATABASE_URL to your Postgres, plus the keys above
-uv run alembic upgrade head
-uv run python -m app.seed
-uv run uvicorn app.main:app --reload
 ```
 
 ### Tests and lint
@@ -49,8 +46,8 @@ uv run uvicorn app.main:app --reload
 Tests need a PostgreSQL database they can wipe (the schema is dropped and rebuilt with the Alembic migrations):
 
 ```bash
-createdb botdesk_test
-export TEST_DATABASE_URL=postgresql+asyncpg://botdesk:botdesk@localhost:5432/botdesk_test
+createdb -U postgres bots_db_v1_test
+export TEST_DATABASE_URL=postgresql+asyncpg://postgres:postgres@localhost:5432/bots_db_v1_test
 uv run pytest -q
 uv run ruff check . && uv run ruff format --check .
 ```

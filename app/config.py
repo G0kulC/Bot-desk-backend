@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 from functools import lru_cache
 from typing import Literal
 
@@ -15,7 +16,7 @@ class Settings(BaseSettings):
 
     APP_ENV: str = "dev"
     APP_BASE_URL: str = "http://localhost:8000"
-    DATABASE_URL: str = "postgresql+asyncpg://botdesk:botdesk@localhost:5432/botdesk"
+    DATABASE_URL: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/bots_db_v1"
     JWT_SECRET: str = "change-me"
     JWT_EXPIRE_MINUTES: int = 10080
     FERNET_KEY: str = ""
@@ -79,6 +80,14 @@ class Settings(BaseSettings):
 
     def validate_startup(self) -> None:
         missing = self.missing_required()
+        if self.APP_ENV == "dev":
+            # Local dev: only the core keys block startup; AI/WhatsApp keys can be added later.
+            core = {"DATABASE_URL", "JWT_SECRET", "FERNET_KEY"}
+            if missing:
+                logging.getLogger(__name__).warning(
+                    "Missing settings (AI replies / WhatsApp will not work until set): %s", ", ".join(missing)
+                )
+            missing = [k for k in missing if k in core]
         if missing:
             raise RuntimeError(
                 "Bot Desk cannot start. Missing required settings for provider "
