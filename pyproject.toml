@@ -1,0 +1,57 @@
+[project]
+name = "botdesk-backend"
+version = "0.1.0"
+description = "Bot Desk: multi-client WhatsApp AI assistant platform for local businesses"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "sqlalchemy[asyncio]>=2.0.30",
+    "asyncpg>=0.29",
+    "alembic>=1.13",
+    "pydantic>=2.7",
+    "pydantic-settings>=2.3",
+    "email-validator>=2.1",
+    "httpx>=0.27",
+    "passlib[bcrypt]>=1.7.4",
+    "bcrypt>=4.0,<4.1",
+    "pyjwt>=2.8",
+    "cryptography>=42",
+    "apscheduler>=3.10,<4",
+    "tzdata>=2024.1",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.2",
+    "pytest-asyncio>=0.24",
+    "respx>=0.21",
+    "ruff>=0.6",
+]
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+line-length = 110
+target-version = "py312"
+extend-exclude = ["alembic/versions"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "ASYNC", "RUF"]
+ignore = ["B008", "RUF001", "RUF002", "RUF003", "RUF012"]
+
+[tool.ruff.lint.isort]
+known-third-party = ["alembic"]
+
+[tool.ruff.lint.per-file-ignores]
+"app/seed_data.py" = ["E501"]
+"app/services/ai/prompts.py" = ["E501"]
+"tests/*" = ["E501"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+filterwarnings = ["ignore::DeprecationWarning"]

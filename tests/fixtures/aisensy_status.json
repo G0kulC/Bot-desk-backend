@@ -1,0 +1,12 @@
+{
+  "id": "evt_03",
+  "topic": "message.status.updated",
+  "project_id": "proj_1",
+  "data": {
+    "message": {
+      "id": "aisensy.OUT_1",
+      "status": "DELIVERED",
+      "phone_number": "919876543210"
+    }
+  }
+}

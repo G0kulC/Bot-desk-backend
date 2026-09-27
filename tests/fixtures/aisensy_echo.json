@@ -1,0 +1,14 @@
+{
+  "id": "evt_05",
+  "topic": "message.created",
+  "project_id": "proj_1",
+  "data": {
+    "message": {
+      "id": "aisensy.OUT_9",
+      "message_type": "TEXT",
+      "message_content": {"text": "Reply we sent through the API"},
+      "sender": "API",
+      "phone_number": "919876543210"
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "WABA_ID_1",
+      "changes": [
+        {
+          "field": "messages",
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {"display_phone_number": "919840000001", "phone_number_id": "PNID1"},
+            "contacts": [{"profile": {"name": "Meena"}, "wa_id": "919811122233"}],
+            "messages": [
+              {
+                "from": "919811122233",
+                "id": "wamid.IN_IMG_1",
+                "timestamp": "1790000100",
+                "type": "image",
+                "image": {"caption": "My tooth", "mime_type": "image/jpeg", "sha256": "abc", "id": "MEDIA1"}
+              },
+              {
+                "from": "919811122233",
+                "id": "wamid.IN_AUDIO_1",
+                "timestamp": "1790000101",
+                "type": "audio",
+                "audio": {"mime_type": "audio/ogg; codecs=opus", "id": "MEDIA2", "voice": true}
+              },
+              {
+                "from": "919811122233",
+                "id": "wamid.IN_LOC_1",
+                "timestamp": "1790000102",
+                "type": "location",
+                "location": {"latitude": 13.085, "longitude": 80.21, "name": "Anna Nagar Tower", "address": "Chennai"}
+              },
+              {
+                "from": "919811122233",
+                "id": "wamid.IN_BTN_1",
+                "timestamp": "1790000103",
+                "type": "interactive",
+                "interactive": {"type": "button_reply", "button_reply": {"id": "b1", "title": "Book now"}}
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

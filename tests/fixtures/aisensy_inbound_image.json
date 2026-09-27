@@ -1,0 +1,15 @@
+{
+  "id": "evt_02",
+  "topic": "message.sender.user",
+  "project_id": "proj_1",
+  "data": {
+    "message": {
+      "id": "aisensy.IN_IMG",
+      "message_type": "IMAGE",
+      "message_content": {"url": "https://files.example/img.jpg", "caption": ""},
+      "sender": "USER",
+      "phone_number": "919876543210",
+      "userName": "Ravi"
+    }
+  }
+}

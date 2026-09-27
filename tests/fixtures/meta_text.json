@@ -1,0 +1,27 @@
+{
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "WABA_ID_1",
+      "changes": [
+        {
+          "field": "messages",
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {"display_phone_number": "919840000001", "phone_number_id": "PNID1"},
+            "contacts": [{"profile": {"name": "Ravi Kumar"}, "wa_id": "919876543210"}],
+            "messages": [
+              {
+                "from": "919876543210",
+                "id": "wamid.IN_TEXT_1",
+                "timestamp": "1790000000",
+                "type": "text",
+                "text": {"body": "Hi, what is the cleaning price?"}
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
